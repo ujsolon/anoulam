@@ -58,4 +58,4 @@ def handler(request, response):
         })
 
     except Exception as e:
-        return response.status(500).
+        return response.status(500)
