@@ -1,78 +1,61 @@
-# api/gemini.py
+import google.generativeai as genai
 import os
 import json
-from http.server import BaseHTTPRequestHandler
-import google.generativeai as genai
+import random
+from dotenv import load_dotenv
 
-# Initialize Gemini
+load_dotenv()
+
+def get_dish_list(filename="dishes.txt"):
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            f.write("Adobo\nSinigang\nKare-Kare\nPancit\nHalo-Halo\n")
+    with open(filename, "r") as f:
+        return [line.strip() for line in f if line.strip()]
+
 def initialize_gemini_model():
-    api_key = os.environ.get('GOOGLE_API_KEY')
+    api_key = os.getenv('GOOGLE_API_KEY')
     if not api_key:
-        return None
-        
+        raise Exception("GOOGLE_API_KEY is missing")
     genai.configure(api_key=api_key)
+    return genai.GenerativeModel('gemini-2.0-flash-lite-preview')
+
+def get_ingredients_gemini(dish_name, model):
+    prompt = (
+        "You are an ingredient list generator for a Philippine audience. "
+        "For the requested dish, provide *only* the ingredients and their estimated quantities suitable for 3 servings. "
+        "Format as a simple list. Exclude all other information like cooking steps, introductions, or notes.\n\n"
+        f"List the ingredients for the dish: {dish_name}"
+    )
+    generation_config = genai.types.GenerationConfig(max_output_tokens=150, temperature=0.7)
+    response = model.generate_content(prompt, generation_config=generation_config)
+    return response.text.strip()
+
+# --- Main handler function for Vercel ---
+def handler(request, response):
     try:
-        model = genai.GenerativeModel('gemini-pro')
-        return model
-    except Exception:
-        return None
+        if request.method != "POST":
+            return response.status(405).send("Method Not Allowed")
 
-def get_ingredients(dish_name):
-    model = initialize_gemini_model()
-    if not model:
-        return {"error": "Failed to initialize Gemini model"}
-    
-    system_instruction = "You are an ingredient list generator. For the requested dish, provide *only* the ingredients and their estimated quantities suitable for 3 servings. Format as a JSON array of objects with 'ingredient' and 'quantity' properties. Example: [{\"ingredient\":\"flour\",\"quantity\":\"2 cups\"}]"
-    user_prompt = f"List the ingredients for the dish: {dish_name}"
-    full_prompt = f"{system_instruction}\n\n{user_prompt}"
+        body = request.json()
 
-    try:
-        generation_config = genai.types.GenerationConfig(
-            max_output_tokens=250,
-            temperature=0.7
-        )
+        dish_name = body.get("dish_name")
+        random_flag = body.get("random", False)
 
-        response = model.generate_content(
-            full_prompt,
-            generation_config=generation_config
-        )
-        
-        # Try to parse as JSON first
-        try:
-            # The response might be a JSON string or might contain markdown code blocks
-            text = response.text.strip()
-            # Remove markdown code block markers if present
-            if text.startswith("```json"):
-                text = text.replace("```json", "").replace("```", "").strip()
-            elif text.startswith("```"):
-                text = text.replace("```", "").strip()
-                
-            ingredients = json.loads(text)
-            return {"ingredients": ingredients}
-        except json.JSONDecodeError:
-            # If not valid JSON, return as text
-            return {"ingredients": response.text.strip()}
-    except Exception as e:
-        return {"error": f"Error generating content: {str(e)}"}
+        dish_list = get_dish_list()
+        if random_flag:
+            dish_name = random.choice(dish_list)
 
-class Handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        data = json.loads(post_data)
-        
-        dish_name = data.get('dishName', '')
         if not dish_name:
-            self.send_response(400)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": "dishName is required"}).encode())
-            return
-            
-        result = get_ingredients(dish_name)
-        
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps(result).encode())
-        return
+            return response.status(400).json({"error": "Dish name not provided and random not selected."})
+
+        model = initialize_gemini_model()
+        ingredients = get_ingredients_gemini(dish_name, model)
+
+        return response.status(200).json({
+            "dish": dish_name,
+            "ingredients": ingredients
+        })
+
+    except Exception as e:
+        return response.status(500).
