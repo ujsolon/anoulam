@@ -40,6 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+<<<<<<< HEAD
 
 venv
 __pycache__
+=======
+.vercel
+>>>>>>> 86a24024a696f19ad0adfae6db960ed6fc3d6d42
