@@ -16,6 +16,8 @@ app = FastAPI()
 class DishRequest(BaseModel):
     dish_name: str | None = None
     random: bool = False
+    servings: int = 3  # Default to 3 if not provided
+
 
 @app.get("/")
 def root():
@@ -30,10 +32,10 @@ def initialize_gemini_model():
     return genai.GenerativeModel('gemini-2.0-flash-lite-preview')
 
 # --- Generate Ingredients from Gemini ---
-def get_ingredients_from_model(dish_name: str, model):
+def get_ingredients_from_model(dish_name: str, servings: int, model):
     prompt = (
         "You are an ingredient list generator for a Philippine audience. "
-        "For the requested dish, provide *only* the ingredients and their estimated quantities suitable for 3 servings. "
+        f"For the requested dish, provide *only* the ingredients and their estimated quantities suitable for {servings} servings. "
         "Format as a simple list. Exclude all other information like cooking steps, introductions, or notes.\n\n"
         f"List the ingredients for the dish: {dish_name}"
     )
@@ -70,7 +72,7 @@ def get_ingredients(request: DishRequest):
 
     try:
         model = initialize_gemini_model()
-        ingredients = get_ingredients_from_model(request.dish_name, model)
+        ingredients = get_ingredients_from_model(request.dish_name, request.servings, model)
         return {
             "dish": request.dish_name,
             "ingredients": ingredients
