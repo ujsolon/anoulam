@@ -7,7 +7,8 @@ import axios from 'axios';
 export default function WhatToBuy() {
   const [dishName, setDishName] = useState('');
   const [servings, setServings] = useState(3);
-  const [ingredients, setIngredients] = useState('');
+  const [ingredients, setIngredients] = useState([]);
+  const [crossedOut, setCrossedOut] = useState(new Set());
 
   const handleSubmit = async () => {
     try {
@@ -15,11 +16,24 @@ export default function WhatToBuy() {
         dish_name: dishName,
         servings: servings,
       });
-      setIngredients(response.data.ingredients);
+      const ingredientList = response.data.ingredients.split('\n').filter(item => item.trim() !== '');
+      setIngredients(ingredientList);
+      setCrossedOut(new Set()); // Reset crossed-out when new ingredients arrive
     } catch (error) {
       console.error('Error fetching ingredients:', error);
-      setIngredients('Error generating ingredients.');
+      setIngredients(['Error generating ingredients.']);
+      setCrossedOut(new Set());
     }
+  };
+
+  const toggleCrossOut = (index) => {
+    const newCrossedOut = new Set(crossedOut);
+    if (newCrossedOut.has(index)) {
+      newCrossedOut.delete(index);
+    } else {
+      newCrossedOut.add(index);
+    }
+    setCrossedOut(newCrossedOut);
   };
 
   return (
@@ -71,12 +85,20 @@ export default function WhatToBuy() {
           </div>
 
           {/* Output Section */}
-          {ingredients && (
+          {ingredients.length > 0 && (
             <div className="card">
               <h2 className="card-title">Shopping List:</h2>
-              <div className="ingredients-list">
-                {ingredients}
-              </div>
+              <ul className="ingredients-list">
+                {ingredients.map((item, index) => (
+                  <li
+                    key={index}
+                    className={`ingredient-item ${crossedOut.has(index) ? 'crossed' : ''}`}
+                    onClick={() => toggleCrossOut(index)}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
