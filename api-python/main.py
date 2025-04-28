@@ -1,6 +1,7 @@
 # main.py
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
 import os
@@ -11,6 +12,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://anoulam.vercel.app/"],  # Replace with frontend URL in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# (rest of your code here)
+
 
 # --- Pydantic Request Model ---
 class DishRequest(BaseModel):
