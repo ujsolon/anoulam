@@ -1,9 +1,27 @@
 'use client';
-
+import { useState } from 'react';
 import Header from '../../components/Header';
 import Link from 'next/link';
+import axios from 'axios'; // You may need to install axios
 
 export default function WhatToBuy() {
+  const [dishName, setDishName] = useState('');
+  const [servings, setServings] = useState(3);
+  const [ingredients, setIngredients] = useState('');
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
+        dish_name: dishName,
+        servings: servings,
+      });
+      setIngredients(response.data.ingredients);
+    } catch (error) {
+      console.error('Error fetching ingredients:', error);
+      setIngredients('Error generating ingredients.');
+    }
+  };
+
   return (
     <div className="page-container">
       <Header />
@@ -15,21 +33,38 @@ export default function WhatToBuy() {
 
           <h1 className="page-title">What to Buy?</h1>
           <p className="page-subtitle">
-            Never wonder what groceries to get again. Our smart shopping list creator helps you:
+            Enter the dish you want to cook and how many servings!
           </p>
 
           <div className="card">
-            <ul className="list-group">
-              <li className="list-item">✓ Generate shopping lists based on your meal plans</li>
-              <li className="list-item">✓ Find the best deals at local grocery stores</li>
-              <li className="list-item">✓ Reduce food waste by buying exactly what you need</li>
-              <li className="list-item">✓ Track pantry inventory so you never buy duplicates</li>
-            </ul>
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Enter dish name (e.g., Adobo)"
+                className="input-field"
+                value={dishName}
+                onChange={(e) => setDishName(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Servings"
+                className="input-field"
+                value={servings}
+                onChange={(e) => setServings(Number(e.target.value))}
+                min="1"
+              />
+              <button className="button-primary" onClick={handleSubmit}>
+                Get Ingredients
+              </button>
+            </div>
           </div>
 
-          <Link href="/shopping" className="button-primary link-button">
-            Create Shopping List
-          </Link>
+          {ingredients && (
+            <div className="card">
+              <h2 className="card-title">Shopping List:</h2>
+              <pre>{ingredients}</pre>
+            </div>
+          )}
         </div>
       </main>
     </div>
