@@ -10,11 +10,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="layout-body">
         {children}
-        <footer className="footer">
-          <div className="footer-content">
-            © {new Date().getFullYear()} What's for Dinner? All rights reserved.
-          </div>
-        </footer>
       </body>
     </html>
   );

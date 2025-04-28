@@ -14,7 +14,7 @@ export default function Header() {
           <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
             <span className="text-black text-xl">★</span>
           </div>
-          What&apos;s for Dinner?
+          Ano Ulam?
         </Link>
         
         {/* Mobile menu button */}
