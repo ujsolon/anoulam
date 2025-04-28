@@ -128,11 +128,17 @@ div:last-child > div:last-child {
 }
 
 .hero-text h1 {
-  font-size: 2.0 rem;
+  font-size: 2.5rem; /* bump it up from 2.0rem to 2.5rem for better mobile size */
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.5px;
   margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .hero-text h1 {
+    font-size: 4.5rem; /* Keep big size on tablet/desktop */
+  }
 }
 
 @media (min-width: 768px) {
