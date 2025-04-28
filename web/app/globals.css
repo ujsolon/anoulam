@@ -463,3 +463,8 @@ main {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

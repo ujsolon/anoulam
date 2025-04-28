@@ -29,7 +29,7 @@ Ano Ulam? (Filipino for "What's for lunch?") is a web application that simplifie
 ### Prerequisites
 
 - Node.js (v18 or later)
-- Python (v3.9 or later)
+- Python (v3.11 or later)
 - npm or yarn
 - A Google API key for the AI backend
 

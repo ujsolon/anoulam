@@ -9,9 +9,11 @@ export default function WhatToBuy() {
   const [servings, setServings] = useState(3);
   const [ingredients, setIngredients] = useState([]);
   const [crossedOut, setCrossedOut] = useState(new Set());
-  const [removedItems, setRemovedItems] = useState([]); // For undo!
+  const [removedItems, setRemovedItems] = useState([]);
+  const [loading, setLoading] = useState(false); // NEW!
 
   const handleSubmit = async () => {
+    setLoading(true); // start loading
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
         dish_name: dishName,
@@ -20,12 +22,14 @@ export default function WhatToBuy() {
       const ingredientList = response.data.ingredients.split('\n').filter(item => item.trim() !== '');
       setIngredients(ingredientList);
       setCrossedOut(new Set());
-      setRemovedItems([]); // clear undo when new fetch
+      setRemovedItems([]);
     } catch (error) {
       console.error('Error fetching ingredients:', error);
       setIngredients(['Error generating ingredients.']);
       setCrossedOut(new Set());
       setRemovedItems([]);
+    } finally {
+      setLoading(false); // end loading
     }
   };
 
@@ -94,8 +98,12 @@ export default function WhatToBuy() {
                 />
               </div>
 
-              <button className="button-primary" onClick={handleSubmit}>
-                Get Ingredients
+              <button 
+                className="button-primary" 
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Get Ingredients'}
               </button>
             </div>
           </div>
