@@ -9,6 +9,7 @@ export default function WhatToBuy() {
   const [servings, setServings] = useState(3);
   const [ingredients, setIngredients] = useState([]);
   const [crossedOut, setCrossedOut] = useState(new Set());
+  const [removedItems, setRemovedItems] = useState([]); // For undo!
 
   const handleSubmit = async () => {
     try {
@@ -18,11 +19,13 @@ export default function WhatToBuy() {
       });
       const ingredientList = response.data.ingredients.split('\n').filter(item => item.trim() !== '');
       setIngredients(ingredientList);
-      setCrossedOut(new Set()); // Reset crossed-out when new ingredients arrive
+      setCrossedOut(new Set());
+      setRemovedItems([]); // clear undo when new fetch
     } catch (error) {
       console.error('Error fetching ingredients:', error);
       setIngredients(['Error generating ingredients.']);
       setCrossedOut(new Set());
+      setRemovedItems([]);
     }
   };
 
@@ -34,6 +37,19 @@ export default function WhatToBuy() {
       newCrossedOut.add(index);
     }
     setCrossedOut(newCrossedOut);
+  };
+
+  const handleRemoveCrossedOut = () => {
+    const newIngredients = ingredients.filter((_, index) => !crossedOut.has(index));
+    const deletedItems = ingredients.filter((_, index) => crossedOut.has(index));
+    setIngredients(newIngredients);
+    setRemovedItems(deletedItems);
+    setCrossedOut(new Set());
+  };
+
+  const handleUndoRemove = () => {
+    setIngredients(prev => [...prev, ...removedItems]);
+    setRemovedItems([]);
   };
 
   return (
@@ -88,6 +104,7 @@ export default function WhatToBuy() {
           {ingredients.length > 0 && (
             <div className="card">
               <h2 className="card-title">Shopping List:</h2>
+
               <ul className="ingredients-list">
                 {ingredients.map((item, index) => (
                   <li
@@ -99,6 +116,25 @@ export default function WhatToBuy() {
                   </li>
                 ))}
               </ul>
+
+              <div className="button-group">
+                <button 
+                  className="button-secondary" 
+                  onClick={handleRemoveCrossedOut}
+                  disabled={crossedOut.size === 0}
+                >
+                  Remove Crossed Ingredients
+                </button>
+
+                {removedItems.length > 0 && (
+                  <button 
+                    className="button-secondary" 
+                    onClick={handleUndoRemove}
+                  >
+                    Undo Remove
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
