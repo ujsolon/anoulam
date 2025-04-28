@@ -4,44 +4,30 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="page-container">
       <Header />
-      
-      {/* Hero Section */}
-      <main className="flex-grow flex flex-col md:flex-row items-center md:items-stretch px-5 md:px-16 py-10 md:py-16">
-        
-        {/* Left Side: Text */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center mb-10 md:mb-0">
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-8">
-            Discover meal ideas with ease
-          </h1>
-          <p className="text-xl text-gray-600 leading-relaxed mb-10">
-            Get personalized meal suggestions based on what you have at home. Simple, quick, and delicious options await!
-          </p>
-
-          {/* Buttons */}
-          <div className="flex flex-col gap-6">
+      <main className="hero-section">
+        <div className="hero-text">
+          <h1>Discover meal ideas with ease</h1>
+          <p>Get personalized meal suggestions based on what you have at home. Simple, quick, and delicious options await!</p>
+          <div className="button-group">
             <div>
-              <Link href="/what-to-cook" className="primary-btn">
-                <span className="mr-2">🍳</span> What to Cook?
+              <Link href="/what-to-cook" className="primary-button">
+                🍳 What to Cook?
               </Link>
-              <p className="mt-2 text-gray-600 ml-2">Tell us what stuff you have!</p>
+              <p className="button-description">Tell us what stuff you have!</p>
             </div>
-
             <div>
-              <Link href="/what-to-buy" className="secondary-btn">
-                <span className="mr-2">🛒</span> What to Buy?
+              <Link href="/what-to-buy" className="secondary-button">
+                🛒 What to Buy?
               </Link>
-              <p className="mt-2 text-gray-600 ml-2">Tell us what dish you want to cook today!</p>
+              <p className="button-description">Tell us what dish you want to cook today!</p>
             </div>
           </div>
         </div>
-
-        {/* Right Side: Image Grid */}
-        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen">
+        <div className="hero-images">
           <ImageGrid />
         </div>
-
       </main>
     </div>
   );

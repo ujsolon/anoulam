@@ -99,3 +99,107 @@ div:last-child > div:last-child {
   border-radius: 15px;
   overflow: hidden;
 }
+
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    flex-direction: row;
+  }
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 1.25rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.primary-button, .secondary-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+}
+
+.primary-button {
+  background-color: #d9de49;
+  color: black;
+}
+
+.secondary-button {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.button-description {
+  margin-top: 0.5rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.hero-images {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1; /* main content expands to take available space */
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
