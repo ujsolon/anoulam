@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Header from '../../components/Header';
 import Link from 'next/link';
-import axios from 'axios'; // You may need to install axios
+import axios from 'axios';
 
 export default function WhatToBuy() {
   const [dishName, setDishName] = useState('');
@@ -36,33 +36,47 @@ export default function WhatToBuy() {
             Enter the dish you want to cook and how many servings!
           </p>
 
+          {/* Form Section */}
           <div className="card">
             <div className="input-group">
-              <input
-                type="text"
-                placeholder="Enter dish name (e.g., Adobo)"
-                className="input-field"
-                value={dishName}
-                onChange={(e) => setDishName(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Servings"
-                className="input-field"
-                value={servings}
-                onChange={(e) => setServings(Number(e.target.value))}
-                min="1"
-              />
+              <div className="input-wrapper">
+                <label className="input-label" htmlFor="dishName">Dish Name</label>
+                <input
+                  id="dishName"
+                  type="text"
+                  placeholder="e.g., Adobo"
+                  className="input-field"
+                  value={dishName}
+                  onChange={(e) => setDishName(e.target.value)}
+                />
+              </div>
+
+              <div className="input-wrapper">
+                <label className="input-label" htmlFor="servings">Servings</label>
+                <input
+                  id="servings"
+                  type="number"
+                  placeholder="3"
+                  className="input-field"
+                  value={servings}
+                  onChange={(e) => setServings(Number(e.target.value))}
+                  min="1"
+                />
+              </div>
+
               <button className="button-primary" onClick={handleSubmit}>
                 Get Ingredients
               </button>
             </div>
           </div>
 
+          {/* Output Section */}
           {ingredients && (
             <div className="card">
               <h2 className="card-title">Shopping List:</h2>
-              <pre>{ingredients}</pre>
+              <div className="ingredients-list">
+                {ingredients}
+              </div>
             </div>
           )}
         </div>
