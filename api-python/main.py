@@ -31,6 +31,9 @@ class DishRequest(BaseModel):
     random: bool = False
     servings: int = 3  # Default to 3 if not provided
 
+class CookingStepsRequest(BaseModel):
+    dish_name: str
+    ingredients: list[str]
 
 @app.get("/")
 def root():
@@ -89,6 +92,46 @@ def get_ingredients(request: DishRequest):
         return {
             "dish": request.dish_name,
             "ingredients": ingredients
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# --- Generate Cooking Steps from Gemini ---
+def get_cooking_steps_from_model(dish_name: str, ingredients: list[str], model):
+    prompt = (
+        "You are a Filipino recipe cooking assistant.\n\n"
+        f"Given the dish '{dish_name}' and the following ingredients:\n"
+        f"{', '.join(ingredients)}\n\n"
+        "Generate clear, step-by-step cooking instructions. "
+        "Be concise but complete, assume a home cook can follow basic steps. "
+        "Use numbered steps like:\n"
+        "1. Do this...\n2. Do that...\n"
+        "Do NOT list ingredients again or add extra notes.\n\n"
+        "Start now:"
+    )
+
+    generation_config = genai.types.GenerationConfig(
+        max_output_tokens=300,
+        temperature=0.7
+    )
+
+    try:
+        response = model.generate_content(prompt, generation_config=generation_config)
+        return response.text.strip()
+    except Exception as e:
+        raise RuntimeError(f"Error generating cooking steps: {e}")
+
+# --- Endpoint: Generate Cooking Steps ---
+@app.post("/get-cooking-steps/")
+def get_cooking_steps(request: CookingStepsRequest):
+    if not request.dish_name or not request.ingredients:
+        raise HTTPException(status_code=400, detail="Dish name and ingredients must be provided.")
+
+    try:
+        model = initialize_gemini_model()
+        steps = get_cooking_steps_from_model(request.dish_name, request.ingredients, model)
+        return {
+            "steps": steps
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

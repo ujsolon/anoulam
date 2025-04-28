@@ -9,11 +9,12 @@ export default function WhatToBuy() {
   const [servings, setServings] = useState(3);
   const [ingredients, setIngredients] = useState([]);
   const [crossedOut, setCrossedOut] = useState(new Set());
-  const [removedItems, setRemovedItems] = useState([]);
-  const [loading, setLoading] = useState(false); // NEW!
+  const [loading, setLoading] = useState(false);
+  const [cookingSteps, setCookingSteps] = useState(''); // NEW - to show cooking instructions
+  const [cookingLoading, setCookingLoading] = useState(false); // NEW
 
   const handleSubmit = async () => {
-    setLoading(true); // start loading
+    setLoading(true);
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
         dish_name: dishName,
@@ -22,14 +23,14 @@ export default function WhatToBuy() {
       const ingredientList = response.data.ingredients.split('\n').filter(item => item.trim() !== '');
       setIngredients(ingredientList);
       setCrossedOut(new Set());
-      setRemovedItems([]);
+      setCookingSteps('');
     } catch (error) {
       console.error('Error fetching ingredients:', error);
       setIngredients(['Error generating ingredients.']);
       setCrossedOut(new Set());
-      setRemovedItems([]);
+      setCookingSteps('');
     } finally {
-      setLoading(false); // end loading
+      setLoading(false);
     }
   };
 
@@ -43,17 +44,20 @@ export default function WhatToBuy() {
     setCrossedOut(newCrossedOut);
   };
 
-  const handleRemoveCrossedOut = () => {
-    const newIngredients = ingredients.filter((_, index) => !crossedOut.has(index));
-    const deletedItems = ingredients.filter((_, index) => crossedOut.has(index));
-    setIngredients(newIngredients);
-    setRemovedItems(deletedItems);
-    setCrossedOut(new Set());
-  };
-
-  const handleUndoRemove = () => {
-    setIngredients(prev => [...prev, ...removedItems]);
-    setRemovedItems([]);
+  const handleCookDish = async () => {
+    setCookingLoading(true);
+    try {
+      const response = await axios.post('https://anoulam.onrender.com/get-cooking-steps/', {
+        dish_name: dishName,
+        ingredients: ingredients,
+      });
+      setCookingSteps(response.data.steps);
+    } catch (error) {
+      console.error('Error fetching cooking steps:', error);
+      setCookingSteps('Error generating cooking instructions.');
+    } finally {
+      setCookingLoading(false);
+    }
   };
 
   return (
@@ -127,21 +131,22 @@ export default function WhatToBuy() {
 
               <div className="button-group">
                 <button 
-                  className="button-secondary" 
-                  onClick={handleRemoveCrossedOut}
-                  disabled={crossedOut.size === 0}
+                  className="button-secondary"
+                  onClick={handleCookDish}
+                  disabled={cookingLoading}
                 >
-                  Remove Crossed Ingredients
+                  {cookingLoading ? 'Generating Steps...' : 'Cook This Dish'}
                 </button>
+              </div>
+            </div>
+          )}
 
-                {removedItems.length > 0 && (
-                  <button 
-                    className="button-secondary" 
-                    onClick={handleUndoRemove}
-                  >
-                    Undo Remove
-                  </button>
-                )}
+          {/* Cooking Instructions Output */}
+          {cookingSteps && (
+            <div className="card">
+              <h2 className="card-title">How to Cook:</h2>
+              <div className="ingredients-list">
+                {cookingSteps}
               </div>
             </div>
           )}
