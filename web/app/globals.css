@@ -86,15 +86,6 @@ div:last-child > div:last-child {
   min-height: 400px; /* Ensure minimum height for grid */
 }
 
-@media (max-width: 768px) {
-  .image-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-height: auto;
-  }
-}
-
 .big-image {
   grid-row: span 2;
 }
@@ -137,7 +128,7 @@ div:last-child > div:last-child {
 }
 
 .hero-text h1 {
-  font-size: 3rem; /* 48px on mobile */
+  font-size: 2.0 rem;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.5px;
@@ -146,7 +137,7 @@ div:last-child > div:last-child {
 
 @media (min-width: 768px) {
   .hero-text h1 {
-    font-size: 4.5rem; /* 72px on tablet/desktop */
+    font-size: 4.5rem;
   }
 }
 
@@ -193,13 +184,6 @@ div:last-child > div:last-child {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Hide on small screens */
-@media (max-width: 768px) {
-  .hero-images {
-    display: none;
-  }
 }
 
 .layout-body {
