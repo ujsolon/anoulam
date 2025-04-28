@@ -186,6 +186,13 @@ div:last-child > div:last-child {
   justify-content: center;
 }
 
+/* Hide on small screens */
+@media (max-width: 768px) {
+  .hero-images {
+    display: none;
+  }
+}
+
 .layout-body {
   display: flex;
   flex-direction: column;
