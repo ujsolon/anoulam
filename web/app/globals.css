@@ -468,3 +468,18 @@ main {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.cooking-steps {
+  list-style: decimal inside;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cooking-steps-output {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 1rem;
+  line-height: 1.6;
+}

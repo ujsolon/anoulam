@@ -10,8 +10,8 @@ export default function WhatToBuy() {
   const [ingredients, setIngredients] = useState([]);
   const [crossedOut, setCrossedOut] = useState(new Set());
   const [loading, setLoading] = useState(false);
-  const [cookingSteps, setCookingSteps] = useState(''); // NEW - to show cooking instructions
-  const [cookingLoading, setCookingLoading] = useState(false); // NEW
+  const [cookingSteps, setCookingSteps] = useState([]);
+  const [cookingLoading, setCookingLoading] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -23,12 +23,12 @@ export default function WhatToBuy() {
       const ingredientList = response.data.ingredients.split('\n').filter(item => item.trim() !== '');
       setIngredients(ingredientList);
       setCrossedOut(new Set());
-      setCookingSteps('');
+      setCookingSteps([]);
     } catch (error) {
       console.error('Error fetching ingredients:', error);
       setIngredients(['Error generating ingredients.']);
       setCrossedOut(new Set());
-      setCookingSteps('');
+      setCookingSteps([]);
     } finally {
       setLoading(false);
     }
@@ -51,14 +51,20 @@ export default function WhatToBuy() {
         dish_name: dishName,
         ingredients: ingredients,
       });
-      setCookingSteps(response.data.steps);
+  
+      const rawSteps = response.data.steps;
+      // Split by a regex that finds numbers followed by dot and space
+      const stepsList = rawSteps.split(/(?<=\d\.)\s+/).filter(step => step.trim() !== '');
+      
+      setCookingSteps(stepsList);
     } catch (error) {
       console.error('Error fetching cooking steps:', error);
-      setCookingSteps('Error generating cooking instructions.');
+      setCookingSteps(['Error generating cooking instructions.']);
     } finally {
       setCookingLoading(false);
     }
   };
+  
 
   return (
     <div className="page-container">
@@ -131,7 +137,7 @@ export default function WhatToBuy() {
 
               <div className="button-group">
                 <button 
-                  className="button-secondary"
+                  className="button-primary"
                   onClick={handleCookDish}
                   disabled={cookingLoading}
                 >
@@ -141,11 +147,11 @@ export default function WhatToBuy() {
             </div>
           )}
 
-          {/* Cooking Instructions Output */}
-          {cookingSteps && (
+          {/* Cooking Instructions */}
+          {cookingSteps.length > 0 && (
             <div className="card">
-              <h2 className="card-title">How to Cook:</h2>
-              <div className="ingredients-list">
+              <h2 className="card-title">How to Cook: {dishName}</h2>
+              <div className="cooking-steps-output">
                 {cookingSteps}
               </div>
             </div>
