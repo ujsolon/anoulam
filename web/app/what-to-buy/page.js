@@ -203,18 +203,20 @@ export default function WhatToBuy() {
             <div className="card">
               <h2 className="card-title">How to Cook: {dishName}</h2>
               <ol className="cooking-steps">
-                {cookingSteps.map((step, index) => (
-                  <li
-                    key={index}
-                    className={`cooking-step-item ${completedSteps.has(index) ? 'completed' : ''}`}
-                    onClick={() => handleStepClick(index)}
-                  >
-                    <div className="step-inner">
-                      <span className="step-text">{step}</span>
-                      {completedSteps.has(index) && <span className="checkmark">✅</span>}
-                    </div>
-                  </li>
-                ))}
+              {cookingSteps.map((step, index) => (
+                <li
+                  key={index}
+                  className={`cooking-step-item ${completedSteps.has(index) ? 'completed' : ''}`}
+                  onClick={() => handleStepClick(index)}
+                >
+                  <div className="step-inner">
+                    <span className="step-text">{step}</span>
+                    <span className="checkbox">
+                      {completedSteps.has(index) ? '☑' : '☐'}
+                    </span>
+                  </div>
+                </li>
+              ))}
               </ol>
 
               {/* Finish Cooking Button (always after steps generated) */}

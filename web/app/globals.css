@@ -493,23 +493,6 @@ main {
   gap: 0.75rem;
 }
 
-.cooking-step-item {
-  font-size: 1rem;
-  line-height: 1.6;
-  cursor: pointer;
-  transition: all 0.2s;
-  /* No display: flex directly here! */
-}
-
-.cooking-step-item:hover {
-  background-color: #f5f5f5;
-}
-
-.cooking-step-item.completed .step-text {
-  text-decoration: line-through;
-  color: #999;
-}
-
 .step-inner {
   display: flex;
   justify-content: space-between;
@@ -538,4 +521,56 @@ main {
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+
+.step-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox {
+  font-size: 1.5rem;
+}
+
+.cooking-step-item {
+  font-size: 1rem;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cooking-step-item:hover {
+  background-color: #f5f5f5;
+}
+
+.cooking-step-item.completed .step-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.cooking-steps {
+  list-style-type: decimal;
+  list-style-position: inside;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.step-inner {
+  display: flex;
+  justify-content: space-between; /* Text left, checkbox right */
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.step-text {
+  flex: 1; /* Stretch the text */
+}
+
+.checkbox {
+  font-size: 1.5rem;
 }
