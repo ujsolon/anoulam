@@ -13,6 +13,8 @@ export default function WhatToBuy() {
   const [cookingSteps, setCookingSteps] = useState([]);
   const [cookingLoading, setCookingLoading] = useState(false);
   const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [dishImage, setDishImage] = useState('');
+  const [finishedCooking, setFinishedCooking] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -25,11 +27,17 @@ export default function WhatToBuy() {
       setIngredients(ingredientList);
       setCrossedOut(new Set());
       setCookingSteps([]);
+      setCompletedSteps(new Set());
+      setFinishedCooking(false);
+      setDishImage('');
     } catch (error) {
       console.error('Error fetching ingredients:', error);
       setIngredients(['Error generating ingredients.']);
       setCrossedOut(new Set());
       setCookingSteps([]);
+      setCompletedSteps(new Set());
+      setFinishedCooking(false);
+      setDishImage('');
     } finally {
       setLoading(false);
     }
@@ -52,13 +60,10 @@ export default function WhatToBuy() {
         dish_name: dishName,
         ingredients: ingredients,
       });
-  
+
       const rawSteps = response.data.steps;
-      
-      // Find all actual numbered steps only
       const matches = rawSteps.match(/\d+\.\s.*?(?=(\d+\.\s)|$)/gs);
       const cleanedSteps = matches ? matches.map(step => step.replace(/^\d+\.\s/, '').trim()) : [];
-  
       setCookingSteps(cleanedSteps);
     } catch (error) {
       console.error('Error fetching cooking steps:', error);
@@ -67,24 +72,50 @@ export default function WhatToBuy() {
       setCookingLoading(false);
     }
   };
-  
+
   const handleStepClick = (index) => {
     const currentCompletedCount = completedSteps.size;
-  
     if (index === currentCompletedCount) {
-      // Mark next step as completed
       const newCompletedSteps = new Set(completedSteps);
       newCompletedSteps.add(index);
       setCompletedSteps(newCompletedSteps);
     } else if (index === currentCompletedCount - 1) {
-      // Uncheck the last completed step
       const newCompletedSteps = new Set(completedSteps);
       newCompletedSteps.delete(index);
       setCompletedSteps(newCompletedSteps);
     }
-    // Else: do nothing (can't click random steps)
+  };
+
+  const fetchDishImage = async () => {
+    try {
+      const response = await axios.get('https://api.unsplash.com/search/photos', {
+        params: {
+          query: dishName + ' food',
+          client_id: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
+          per_page: 1,
+        },
+      });
+      
+      console.log('Unsplash search result:', response.data);
+  
+      if (response.data.results && response.data.results.length > 0) {
+        setDishImage(response.data.results[0].urls.regular);
+      } else {
+        setDishImage('');
+      }
+    } catch (error) {
+      console.error('Error fetching dish image:', error);
+      setDishImage('');
+    }
   };
   
+  const handleFinishCooking = async () => {
+    const allSteps = new Set(cookingSteps.map((_, index) => index));
+    setCompletedSteps(allSteps);
+
+    await fetchDishImage();
+    setFinishedCooking(true);
+  };
 
   return (
     <div className="page-container">
@@ -138,7 +169,7 @@ export default function WhatToBuy() {
             </div>
           </div>
 
-          {/* Output Section */}
+          {/* Ingredients List */}
           {ingredients.length > 0 && (
             <div className="card">
               <h2 className="card-title">Shopping List:</h2>
@@ -185,6 +216,36 @@ export default function WhatToBuy() {
                   </li>
                 ))}
               </ol>
+
+              {/* Finish Cooking Button (always after steps generated) */}
+              {!finishedCooking && (
+                <div className="button-group">
+                  <button 
+                    className="button-primary"
+                    onClick={handleFinishCooking}
+                  >
+                    Finish Cooking
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Congratulations Section */}
+          {finishedCooking && (
+            <div className="card congratulations">
+              <h2 className="card-title">🎉 Enjoy your {dishName}!</h2>
+              {dishImage && (
+                <img 
+                  src={dishImage} 
+                  alt={dishName || 'Delicious meal'} 
+                  className="dish-image"
+                  onError={(e) => {
+                    console.error('Dish image failed to load.');
+                    e.target.style.display = 'none'; // Hide the image if it fails
+                  }}
+                />
+              )}
             </div>
           )}
         </div>
