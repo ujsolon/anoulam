@@ -176,13 +176,20 @@ export default function WhatToBuy() {
 
               <ul className="ingredients-list">
                 {ingredients.map((item, index) => (
-                  <li
-                    key={index}
-                    className={`ingredient-item ${crossedOut.has(index) ? 'crossed' : ''}`}
-                    onClick={() => toggleCrossOut(index)}
-                  >
-                    {item}
-                  </li>
+                  <li key={index} className={`ingredient-item ${crossedOut.has(index) ? 'crossed' : ''}`}>
+                  <div className="flex justify-between items-center">
+                    <span onClick={() => toggleCrossOut(index)} className="flex-1 cursor-pointer">{item}</span>
+                    <a 
+                      href={`https://www.foodpanda.ph/darkstore/y3xs/pandamart-se/search?q=${encodeURIComponent(item)}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:underline ml-4"
+                    >
+                      Shop →
+                    </a>
+                  </div>
+                </li>
+                
                 ))}
               </ul>
 
