@@ -68,14 +68,21 @@ export default function WhatToBuy() {
     }
   };
   
-
   const handleStepClick = (index) => {
-    // Only allow clicking the next available step
-    if (index === completedSteps.size) {
+    const currentCompletedCount = completedSteps.size;
+  
+    if (index === currentCompletedCount) {
+      // Mark next step as completed
       const newCompletedSteps = new Set(completedSteps);
       newCompletedSteps.add(index);
       setCompletedSteps(newCompletedSteps);
+    } else if (index === currentCompletedCount - 1) {
+      // Uncheck the last completed step
+      const newCompletedSteps = new Set(completedSteps);
+      newCompletedSteps.delete(index);
+      setCompletedSteps(newCompletedSteps);
     }
+    // Else: do nothing (can't click random steps)
   };
   
 
