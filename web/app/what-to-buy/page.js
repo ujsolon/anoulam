@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Header from '../../components/Header';
+import ShopOptionsModal from '../../components/ShopOptionsModal';
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ export default function WhatToBuy() {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [dishImage, setDishImage] = useState('');
   const [finishedCooking, setFinishedCooking] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -179,20 +181,25 @@ export default function WhatToBuy() {
                   <li key={index} className={`ingredient-item ${crossedOut.has(index) ? 'crossed' : ''}`}>
                   <div className="flex justify-between items-center">
                     <span onClick={() => toggleCrossOut(index)} className="flex-1 cursor-pointer">{item}</span>
-                    <a 
-                      href={`https://www.foodpanda.ph/darkstore/y3xs/pandamart-se/search?q=${encodeURIComponent(item)}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setSelectedIngredient(item)}
                       className="text-sm text-blue-600 hover:underline ml-4"
                     >
-                      Shop →
-                    </a>
+                      🛒
+                    </button>
                   </div>
                 </li>
                 
                 ))}
               </ul>
-
+              
+              {selectedIngredient && (
+                <ShopOptionsModal
+                  ingredient={selectedIngredient}
+                  onClose={() => setSelectedIngredient(null)}
+                />
+              )}
+              
               <div className="button-group">
                 <button 
                   className="button-primary"
