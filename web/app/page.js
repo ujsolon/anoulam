@@ -11,12 +11,12 @@ export default function Home() {
           <h1>Discover meal ideas with ease</h1>
           <p>Get personalized meal suggestions based on what you have at home. Simple, quick, and delicious options await!</p>
           <div className="button-group">
-            <div>
+            {/* <div>
               <Link href="/what-to-cook" className="primary-button">
                 🍳 What to Cook?
               </Link>
               <p className="button-description">Tell us what stuff you have!</p>
-            </div>
+            </div> */}
             <div>
               <Link href="/what-to-buy" className="secondary-button">
                 🛒 What to Buy?
