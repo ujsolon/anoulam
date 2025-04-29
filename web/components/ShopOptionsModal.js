@@ -4,7 +4,12 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
   const [copied, setCopied] = useState(false);
 
   const foodpandaLink = `https://www.foodpanda.ph/darkstore/y3xs/pandamart-se/search?q=${encodeURIComponent(ingredient)}`;
-
+  const googleShoppingLink = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(ingredient)}`;
+  const metromartShoppingLink = `https://www.metromart.com/welcome/shops/search-results?keyword=${encodeURIComponent(ingredient)}`;
+  const smShoppingLink = `https://smmarkets.ph/search.html?query=${encodeURIComponent(ingredient)}`;
+  const waltermartShoppingLink = `https://www.waltermartdelivery.com.ph/shop#!/?q=${encodeURIComponent(ingredient)}`;
+  
+  
   const handleCopy = () => {
     navigator.clipboard.writeText(ingredient);
     setCopied(true);
