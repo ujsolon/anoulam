@@ -1,59 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function ShopOptionsModal({ ingredient, onClose }) {
-  const foodpandaSearch = `https://www.foodpanda.ph/darkstore/y3xs/pandamart-se/search?q=${encodeURIComponent(ingredient)}`;
+  const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(foodpandaSearch);
-    alert('Link copied to clipboard!');
-    onClose();
+  const foodpandaLink = `https://www.foodpanda.ph/darkstore/y3xs/pandamart-se/search?q=${encodeURIComponent(ingredient)}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(ingredient);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex justify-center items-center z-50 px-4">
-  <div className="shop-modal bg-white rounded-xl p-6 w-full max-w-md shadow-xl animate-fadeInModal text-center">
-    <h3 className="text-lg font-semibold mb-1">Shop for:</h3>
-    <p className="text-gray-800 font-medium mb-6 break-words">{ingredient}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+      <div className="shop-modal bg-white border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl animate-fadeInModal text-center overflow-hidden">
+        
+        {/* Header with background */}
+        <div className="bg-gray-100 px-6 py-4">
+          <h3 className="text-lg font-semibold text-gray-700">Shop for:</h3>
+          <p className="text-xl font-bold text-gray-900 break-words">{ingredient}</p>
+        </div>
 
-    <ul className="space-y-4">
-      <li>
-        <a
-          href={foodpandaSearch}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full text-sm text-black hover:underline"
-        >
-          🔎 Open Foodpanda Search
-        </a>
-      </li>
-      <li>
-        <button
-          onClick={copyToClipboard}
-          className="block w-full text-sm text-black hover:underline"
-        >
-          📋 Copy Link to Clipboard
-        </button>
-      </li>
-      <li>
-        <a
-          href="https://www.foodpanda.ph/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full text-sm text-black hover:underline"
-        >
-          🛍 Open Foodpanda Home
-        </a>
-      </li>
-    </ul>
+        {/* Main options */}
+        <div className="px-6 py-8 space-y-6">
+          <div>
+            <button
+              onClick={handleCopy}
+              className="w-full text-lg text-black hover:underline flex justify-center items-center gap-2"
+            >
+              📋 Copy ingredient to clipboard
+            </button>
+            {copied && (
+              <p className="text-green-600 text-sm mt-1">Copied!</p>
+            )}
+          </div>
 
-    <button
-      onClick={onClose}
-      className="mt-6 w-full text-sm text-gray-500 hover:text-black hover:underline"
-    >
-      Cancel
-    </button>
-  </div>
-</div>
+          <div>
+            <a
+              href={foodpandaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full text-lg text-black hover:underline flex justify-center items-center gap-2"
+            >
+              🛍 Search in Foodpanda
+            </a>
+          </div>
+        </div>
 
+        {/* Footer */}
+        <div className="bg-gray-100 px-6 py-4">
+          <button
+            onClick={onClose}
+            className="w-full text-sm text-gray-600 hover:text-black hover:underline flex justify-center items-center gap-2"
+          >
+            ✖ Cancel
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
