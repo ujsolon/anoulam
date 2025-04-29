@@ -12,6 +12,7 @@ export default function WhatToBuy() {
   const [loading, setLoading] = useState(false);
   const [cookingSteps, setCookingSteps] = useState([]);
   const [cookingLoading, setCookingLoading] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState(new Set());
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -53,15 +54,27 @@ export default function WhatToBuy() {
       });
   
       const rawSteps = response.data.steps;
-      // Split by a regex that finds numbers followed by dot and space
-      const stepsList = rawSteps.split(/(?<=\d\.)\s+/).filter(step => step.trim() !== '');
       
-      setCookingSteps(stepsList);
+      // Find all actual numbered steps only
+      const matches = rawSteps.match(/\d+\.\s.*?(?=(\d+\.\s)|$)/gs);
+      const cleanedSteps = matches ? matches.map(step => step.replace(/^\d+\.\s/, '').trim()) : [];
+  
+      setCookingSteps(cleanedSteps);
     } catch (error) {
       console.error('Error fetching cooking steps:', error);
       setCookingSteps(['Error generating cooking instructions.']);
     } finally {
       setCookingLoading(false);
+    }
+  };
+  
+
+  const handleStepClick = (index) => {
+    // Only allow clicking the next available step
+    if (index === completedSteps.size) {
+      const newCompletedSteps = new Set(completedSteps);
+      newCompletedSteps.add(index);
+      setCompletedSteps(newCompletedSteps);
     }
   };
   
@@ -151,9 +164,20 @@ export default function WhatToBuy() {
           {cookingSteps.length > 0 && (
             <div className="card">
               <h2 className="card-title">How to Cook: {dishName}</h2>
-              <div className="cooking-steps-output">
-                {cookingSteps}
-              </div>
+              <ol className="cooking-steps">
+                {cookingSteps.map((step, index) => (
+                  <li
+                    key={index}
+                    className={`cooking-step-item ${completedSteps.has(index) ? 'completed' : ''}`}
+                    onClick={() => handleStepClick(index)}
+                  >
+                    <div className="step-inner">
+                      <span className="step-text">{step}</span>
+                      {completedSteps.has(index) && <span className="checkmark">✅</span>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           )}
         </div>
