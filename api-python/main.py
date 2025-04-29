@@ -23,30 +23,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/get-dish-image/")
-def get_dish_image(dish_name: str = Query(...)):
-    access_key = os.getenv("UNSPLASH_ACCESS_KEY")
-    if not access_key:
-        raise HTTPException(status_code=500, detail="Unsplash API key missing.")
-
-    try:
-        response = requests.get("https://api.unsplash.com/search/photos", params={
-            "query": f"{dish_name} food",
-            "per_page": 1,
-            "client_id": access_key
-        })
-
-        data = response.json()
-        if data.get("results"):
-            image_url = data["results"][0]["urls"]["regular"]
-            return {"image_url": image_url}
-        else:
-            return {"image_url": ""}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Image fetch error: {e}")
-
-
-
 # --- Pydantic Request Model ---
 class DishRequest(BaseModel):
     dish_name: str | None = None
@@ -157,3 +133,25 @@ def get_cooking_steps(request: CookingStepsRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.get("/get-dish-image/")
+def get_dish_image(dish_name: str = Query(...)):
+    access_key = os.getenv("UNSPLASH_ACCESS_KEY")
+    if not access_key:
+        raise HTTPException(status_code=500, detail="Unsplash API key missing.")
+
+    try:
+        response = requests.get("https://api.unsplash.com/search/photos", params={
+            "query": f"{dish_name} food",
+            "per_page": 1,
+            "client_id": access_key
+        })
+
+        data = response.json()
+        if data.get("results"):
+            image_url = data["results"][0]["urls"]["regular"]
+            return {"image_url": image_url}
+        else:
+            return {"image_url": ""}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Image fetch error: {e}")
