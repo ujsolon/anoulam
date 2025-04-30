@@ -41,16 +41,15 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="bg-white border border-gray-200 w-full max-w-md shadow-2xl animate-fadeInModal text-left overflow-hidden">
-        
+      <div className="bg-white border border-gray-200 w-full max-w-md shadow-2xl animate-fadeInModal text-left overflow-hidden px-6 pt-6 pb-4">
         {/* Header */}
-        <div className="bg-gray-100 px-6 py-4">
+        <div className="bg-gray-100 -mx-6 px-6 py-4 mb-6">
           <h3 className="text-lg font-semibold text-gray-700">Shop for:</h3>
           <p className="text-xl font-bold text-gray-900 break-words">{ingredient}</p>
         </div>
 
         {/* Main actions */}
-        <div className="px-6 py-8 space-y-6">
+        <div className="space-y-6">
           {/* Copy button */}
           <div>
             <button
@@ -84,7 +83,7 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="bg-gray-100 px-6 py-4">
+        <div className="bg-gray-100 -mx-6 px-6 py-4 mt-8">
           <button
             onClick={onClose}
             className="w-full text-sm text-gray-600 hover:text-black hover:underline flex items-center gap-2"
