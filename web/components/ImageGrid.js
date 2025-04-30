@@ -6,8 +6,8 @@ export default function ImageGrid() {
       {/* Big Image (spans two rows) */}
       <div className="relative row-span-2">
         <Image 
-          src="/images/prepare-ingredients.jpg" 
-          alt="Food ingredients on a table with hands preparing food"
+          src="/images/taiwanese-whole-fried-chicken.jpg" 
+          alt="Taiwanese whole fried chicken"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
