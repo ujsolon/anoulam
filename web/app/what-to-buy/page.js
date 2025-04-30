@@ -1,9 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import ShopOptionsModal from '../../components/ShopOptionsModal';
 import Link from 'next/link';
 import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
+
 
 export default function WhatToBuy() {
   const [dishName, setDishName] = useState('');
@@ -17,7 +19,15 @@ export default function WhatToBuy() {
   const [dishImage, setDishImage] = useState('');
   const [finishedCooking, setFinishedCooking] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
-
+  
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const prefillDish = searchParams.get('dish');
+    if (prefillDish) {
+      setDishName(prefillDish);
+    }
+  }, [searchParams]);
+  
   const handleSubmit = async () => {
     setLoading(true);
     try {
