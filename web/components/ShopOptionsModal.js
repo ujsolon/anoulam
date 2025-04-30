@@ -32,20 +32,6 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
     }
   };
 
-  useEffect(() => {
-    const stored = localStorage.getItem('preferredStores');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setActiveStores(parsed);
-      } catch {
-        setActiveStores(Object.keys(allStores));
-      }
-    } else {
-      setActiveStores(Object.keys(allStores));
-    }
-  }, [ingredient]);
-
   const handleCopy = () => {
     navigator.clipboard.writeText(ingredient);
     setCopied(true);
