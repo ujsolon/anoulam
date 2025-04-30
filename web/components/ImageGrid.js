@@ -6,8 +6,8 @@ export default function ImageGrid() {
       {/* Big Image (spans two rows) */}
       <div className="relative row-span-2">
         <Image 
-          src="/images/cooking-ingredients.jpg" 
-          alt="Food ingredients on a table with hands preparing food"
+          src="/images/taiwanese-whole-fried-chicken.jpg" 
+          alt="Taiwanese whole fried chicken"
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -30,8 +30,8 @@ export default function ImageGrid() {
       
       <div className="relative">
         <Image 
-          src="/images/meal-plate.jpg" 
-          alt="Delicious meal on a plate with utensils"
+          src="/images/grilled-cheese-sandwich-plus-cherry-skyr-with-musli.jpg" 
+          alt="Grilled cheese sandwich plus cherry skyr with musli"
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
           style={{ objectFit: 'cover' }}
