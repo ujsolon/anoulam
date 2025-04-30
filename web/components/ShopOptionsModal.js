@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 export default function ShopOptionsModal({ ingredient, onClose }) {
   const [copied, setCopied] = useState(false);
-  const [activeStores, setActiveStores] = useState([]);
 
   const allStores = {
     foodpanda: {
@@ -32,6 +31,8 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
     }
   };
 
+  const activeStores = Object.keys(allStores);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(ingredient);
     setCopied(true);
@@ -40,7 +41,7 @@ export default function ShopOptionsModal({ ingredient, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="bg-white border border-gray-200 rounded-2xl w-full max-w-md shadow-2xl animate-fadeInModal text-left overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-none w-full max-w-md shadow-2xl animate-fadeInModal text-left overflow-hidden">
         {/* Header */}
         <div className="bg-gray-100 px-6 py-4">
           <h3 className="text-lg font-semibold text-gray-700">Shop for:</h3>
