@@ -18,8 +18,11 @@ export default function WhatToBuy() {
   const [dishImage, setDishImage] = useState('');
   const [finishedCooking, setFinishedCooking] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+
   
   const handleSubmit = async () => {
+    setSubmitted(true);
     setLoading(true);
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
@@ -146,9 +149,10 @@ export default function WhatToBuy() {
                   id="dishName"
                   type="text"
                   placeholder="e.g., Adobo"
-                  className="input-field"
+                  className={`input-field ${submitted ? 'opacity-50 cursor-not-allowed' : ''}`}
                   value={dishName}
                   onChange={(e) => setDishName(e.target.value)}
+                  disabled={submitted}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -164,10 +168,11 @@ export default function WhatToBuy() {
                   id="servings"
                   type="number"
                   placeholder="3"
-                  className="input-field"
+                  className={`input-field ${submitted ? 'opacity-50 cursor-not-allowed' : ''}`}
                   value={servings}
                   onChange={(e) => setServings(Number(e.target.value))}
                   min="1"
+                  disabled={submitted}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -178,9 +183,9 @@ export default function WhatToBuy() {
               </div>
 
               <button 
-                className="button-primary" 
+                className={`button-primary ${submitted ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || submitted}
               >
                 {loading ? 'Loading...' : 'Get Ingredients'}
               </button>
