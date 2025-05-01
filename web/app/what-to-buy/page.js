@@ -22,6 +22,10 @@ export default function WhatToBuy() {
 
   
   const handleSubmit = async () => {
+    if (!dishName.trim()) {
+      alert('Please enter a dish name before continuing.');
+      return;
+    }
     setSubmitted(true);
     setLoading(true);
     try {
@@ -300,6 +304,7 @@ export default function WhatToBuy() {
                   setDishImage('');
                   setFinishedCooking(false);
                   setSelectedIngredient(null);
+                  setSubmitted(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
