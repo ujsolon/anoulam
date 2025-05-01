@@ -155,3 +155,14 @@ def get_dish_image(dish_name: str = Query(...)):
             return {"image_url": ""}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Image fetch error: {e}")
+    
+@app.get("/random-dish/")
+def get_random_dish():
+    try:
+        with open("dishest.txt", "r", encoding="utf-8") as file:
+            dishes = [line.strip() for line in file if line.strip()]
+        if not dishes:
+            return {"error": "No dishes found."}
+        return {"dish_name": random.choice(dishes)}
+    except FileNotFoundError:
+        return {"error": "dishest.txt not found"}
