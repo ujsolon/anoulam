@@ -149,6 +149,12 @@ export default function WhatToBuy() {
                   className="input-field"
                   value={dishName}
                   onChange={(e) => setDishName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSubmit();
+                    }
+                  }}
                 />
               </div>
 
@@ -162,6 +168,12 @@ export default function WhatToBuy() {
                   value={servings}
                   onChange={(e) => setServings(Number(e.target.value))}
                   min="1"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSubmit();
+                    }
+                  }}
                 />
               </div>
 
