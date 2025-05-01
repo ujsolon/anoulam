@@ -22,6 +22,9 @@ export default function WhatToBuy() {
   const [cookClicked, setCookClicked] = useState(false);
   const [finishClicked, setFinishClicked] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [shoppingCopied, setShoppingCopied] = useState(false);
+  const [stepsCopied, setStepsCopied] = useState(false);
+
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
@@ -228,7 +231,22 @@ export default function WhatToBuy() {
           {/* Ingredients List */}
           {ingredients.length > 0 && (
             <div className="card">
-              <h2 className="card-title">Shopping List:</h2>
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="card-title">Shopping List: {dishName}</h2>
+                <button
+                  onClick={() => {
+                    const uncrossed = ingredients.filter((_, idx) => !crossedOut.has(idx));
+                    const text = `Shopping List: ${dishName}\n` + uncrossed.join('\n');
+                    navigator.clipboard.writeText(text);
+                    setShoppingCopied(true);
+                    setTimeout(() => setShoppingCopied(false), 2000);
+                  }}
+                  className="text-lg hover:text-gray-700"
+                  title="Copy uncrossed items"
+                >
+                  {shoppingCopied ? <span className="text-green-600 text-sm">✔ Copied!</span> : '📋'}
+                </button>
+              </div>
 
               <ul className="ingredients-list">
                 {ingredients.map((item, index) => (
@@ -246,7 +264,7 @@ export default function WhatToBuy() {
                 
                 ))}
               </ul>
-              
+
               {selectedIngredient && (
                 <ShopOptionsModal
                   ingredient={selectedIngredient}
@@ -273,7 +291,24 @@ export default function WhatToBuy() {
           {/* Cooking Instructions */}
           {cookingSteps.length > 0 && (
             <div className="card">
-              <h2 className="card-title">How to Cook: {dishName}</h2>
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="card-title">How to Cook: {dishName}</h2>
+                <button
+                  onClick={() => {
+                    const unfinished = cookingSteps.filter((_, idx) => !completedSteps.has(idx));
+                    const text = `How to Cook: ${dishName}\n` + unfinished.join('\n');
+                    navigator.clipboard.writeText(text);
+                    setStepsCopied(true);
+                    setTimeout(() => setStepsCopied(false), 2000);
+                  }}
+                  className="text-lg hover:text-gray-700"
+                  title="Copy unfinished steps"
+                >
+                  {stepsCopied ? <span className="text-green-600 text-sm">✔ Copied!</span> : '📋'}
+                </button>
+
+              </div>
+
               <ol className="cooking-steps">
               {cookingSteps.map((step, index) => (
                 <li

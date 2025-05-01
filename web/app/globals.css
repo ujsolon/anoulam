@@ -593,3 +593,10 @@ main {
 .animate-fadeInModal {
   animation: fadeInModal 0.25s ease-out;
 }
+
+button.text-lg {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
