@@ -39,19 +39,18 @@ export default function RandomDish() {
             <h2 className="card-title">{loading ? 'Loading...' : dish}</h2>
             <p className="page-subtitle">(Picture and description coming soon!)</p>
 
-            <div className="button-group">
-              <button onClick={fetchDish} className="button-secondary">
-                🔄 Get Another
-              </button>
-
-              {dish && !dish.startsWith('Error') && (
-                <Link
-                  href={`/what-to-buy?dish=${encodeURIComponent(dish)}`}
-                  className="button-primary"
-                >
-                  ➡️ Cook This Dish
-                </Link>
-              )}
+            <div className="flex flex-col gap-4 mt-4">
+                {dish && !dish.startsWith('Error') && (
+                    <Link
+                    href={`/what-to-buy?dish=${encodeURIComponent(dish)}`}
+                    className="button-primary w-full text-center"
+                    >
+                    ➡️ Cook This Dish
+                    </Link>
+                )}
+                <button onClick={fetchDish} className="button-secondary w-full">
+                    🔄 Get Another
+                </button>
             </div>
           </div>
         </div>
