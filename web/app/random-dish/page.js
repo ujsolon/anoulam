@@ -10,7 +10,7 @@ export default function RandomDish() {
   const fetchDish = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://your-backend-url/random-dish/');
+      const response = await fetch('https://anoulam.onrender.com/random-dish/');
       const data = await response.json();
       setDish(data.dish_name || 'No dish found');
     } catch (error) {
