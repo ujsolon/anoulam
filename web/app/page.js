@@ -23,6 +23,12 @@ export default function Home() {
               </Link>
               <p className="button-description">Tell us what dish you want to cook today!</p>
             </div>
+            <div>
+              <Link href="/random-dish" className="secondary-button">
+                🎲 Surprise Me!
+              </Link>
+              <p className="button-description">Pick a random dish for me</p>
+            </div>
           </div>
         </div>
         <div className="hero-images">
