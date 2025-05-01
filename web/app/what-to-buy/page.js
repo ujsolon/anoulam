@@ -1,5 +1,5 @@
 'use client';
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect} from 'react';
 import Header from '../../components/Header';
 import ShopOptionsModal from '../../components/ShopOptionsModal';
 import Link from 'next/link';
@@ -21,6 +21,20 @@ export default function WhatToBuy() {
   const [submitted, setSubmitted] = useState(false);
   const [cookClicked, setCookClicked] = useState(false);
   const [finishClicked, setFinishClicked] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!hasGenerated) return;
+      e.preventDefault();
+      e.returnValue = ''; // This triggers the browser's built-in confirm dialog
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [hasGenerated]);
   
   const handleSubmit = async () => {
     if (!dishName.trim()) {
@@ -69,6 +83,7 @@ export default function WhatToBuy() {
   };
 
   const handleCookDish = async () => {
+    setHasGenerated(true);
     setCookingLoading(true);
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-cooking-steps/', {
@@ -141,7 +156,16 @@ export default function WhatToBuy() {
       <main className="main-content">
         <div className="content-wrapper">
           <div className="back-link">
-            <Link href="/">← Back to Home</Link>
+            <Link href="/" onClick={(e) => {
+              if (hasGenerated) {
+                const confirmLeave = window.confirm('You have unsaved progress. Are you sure you want to leave this page?');
+                if (!confirmLeave) {
+                  e.preventDefault(); // cancel navigation
+                }
+              }
+            }}>
+              ← Back to Home
+            </Link>
           </div>
 
           <h1 className="page-title">What to Buy?</h1>
