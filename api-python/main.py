@@ -159,10 +159,10 @@ def get_dish_image(dish_name: str = Query(...)):
 @app.get("/random-dish/")
 def get_random_dish():
     try:
-        with open("dishest.txt", "r", encoding="utf-8") as file:
+        with open("dishes.txt", "r", encoding="utf-8") as file:
             dishes = [line.strip() for line in file if line.strip()]
         if not dishes:
             return {"error": "No dishes found."}
         return {"dish_name": random.choice(dishes)}
     except FileNotFoundError:
-        return {"error": "dishest.txt not found"}
+        return {"error": "dishes.txt not found"}
