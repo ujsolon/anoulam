@@ -280,6 +280,28 @@ export default function WhatToBuy() {
               )}
             </div>
           )}
+
+          {finishedCooking && (
+            <div className="button-group mt-4">
+              <button
+                className="button-secondary"
+                onClick={() => {
+                  setDishName('');
+                  setServings(3);
+                  setIngredients([]);
+                  setCrossedOut(new Set());
+                  setCookingSteps([]);
+                  setCompletedSteps(new Set());
+                  setDishImage('');
+                  setFinishedCooking(false);
+                  setSelectedIngredient(null);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
+                🔄 Start Over
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </div>
