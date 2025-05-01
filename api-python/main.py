@@ -17,7 +17,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://anoulam.vercel.app", "http://localhost:3000"], #Remove localhost once prod-ready
+    allow_origins=["https://anoulam.vercel.app", "https://anoulam-git-main-uj-solons-projects.vercel.app/", "https://anoulam-uj-solons-projects.vercel.app/", "http://localhost:3000"], #Remove localhost once prod-ready
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
