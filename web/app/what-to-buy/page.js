@@ -19,11 +19,16 @@ export default function WhatToBuy() {
   const [finishedCooking, setFinishedCooking] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-
+  const [cookClicked, setCookClicked] = useState(false);
+  const [finishClicked, setFinishClicked] = useState(false);
   
   const handleSubmit = async () => {
     if (!dishName.trim()) {
       alert('Please enter a dish name before continuing.');
+      return;
+    }
+    if (!Number.isInteger(servings) || servings < 1) {
+      alert('Please enter a valid number of servings (an integer ≥ 1).');
       return;
     }
     setSubmitted(true);
@@ -226,13 +231,17 @@ export default function WhatToBuy() {
               )}
               
               <div className="button-group">
-                <button 
-                  className="button-primary"
-                  onClick={handleCookDish}
-                  disabled={cookingLoading}
-                >
-                  {cookingLoading ? 'Generating Steps...' : 'Cook This Dish'}
-                </button>
+              <button 
+                className={`button-primary ${cookClicked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={async () => {
+                  if (cookClicked) return;
+                  setCookClicked(true);
+                  await handleCookDish();
+                }}
+                disabled={cookingLoading || cookClicked}
+              >
+                {cookingLoading ? 'Generating Steps...' : 'Cook This Dish'}
+              </button>
               </div>
             </div>
           )}
@@ -262,8 +271,13 @@ export default function WhatToBuy() {
               {!finishedCooking && (
                 <div className="button-group">
                   <button 
-                    className="button-primary"
-                    onClick={handleFinishCooking}
+                    className={`button-primary ${finishClicked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={async () => {
+                      if (finishClicked) return;
+                      setFinishClicked(true);
+                      await handleFinishCooking();
+                    }}
+                    disabled={finishClicked}
                   >
                     Finish Cooking
                   </button>
@@ -305,6 +319,8 @@ export default function WhatToBuy() {
                   setFinishedCooking(false);
                   setSelectedIngredient(null);
                   setSubmitted(false);
+                  setFinishClicked(false);
+                  setCookClicked(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               >
