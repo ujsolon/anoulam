@@ -8,6 +8,8 @@ export default function RandomDish() {
   const [dish, setDish] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const getRandomDish = () => {
     setLoading(true);
@@ -31,7 +33,7 @@ export default function RandomDish() {
   useEffect(() => {
     setImageLoaded(false); // reset on new image
   }, [dish]);
-  
+
   return (
     <div className="page-container">
       <Header />
@@ -56,9 +58,10 @@ export default function RandomDish() {
                     <img 
                       src={dish.image}
                       alt={dish.dish_name}
-                      className={`rounded-lg w-full h-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      className={`rounded-lg w-full h-auto transition-opacity duration-300 cursor-pointer ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setImageLoaded(true)}
                       onError={() => setImageLoaded(true)}
+                      onClick={() => setIsModalOpen(true)}
                     />
                   </div>
                 )}
@@ -82,6 +85,18 @@ export default function RandomDish() {
               </button>
             </div>
           </div>
+          {isModalOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <img
+                src={dish.image}
+                alt={dish.dish_name}
+                className="max-w-full max-h-full object-contain p-4"
+              />
+            </div>
+          )}
         </div>
       </main>
     </div>
