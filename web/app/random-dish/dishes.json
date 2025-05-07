@@ -1,0 +1,282 @@
+[
+  {
+    "dish_id": 1,
+    "dish_name": "Pinakbet",
+    "description": "A colorful vegetable dish featuring bitter melon, eggplant, okra, and string beans cooked with pork and bagoong (shrimp paste).",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598334/Pinakbet_njkpzv.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 2,
+    "dish_name": "Miki Bihon Guisado",
+    "description": "A combination of two noodles - egg noodles (miki) and rice noodles (bihon) - stir-fried with meat, seafood, and vegetables.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598332/Miki_Bihon_Guisado_fs6rsp.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 3,
+    "dish_name": "Miki Guisado",
+    "description": "Egg noodles stir-fried with various meats, seafood, and vegetables in a savory sauce.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598319/Miki_Guisado_otfq1n.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 4,
+    "dish_name": "Chicken in Tamarind Soup",
+    "description": "Tender chicken pieces simmered in a tangy tamarind-based broth with vegetables, similar to sinigang but focused on chicken.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598322/Chicken_in_Tamarind_Soup_rlsd89.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 5,
+    "dish_name": "Nilagang Baka",
+    "description": "A clear beef soup with vegetables like cabbage, potatoes, and corn, seasoned simply to highlight the natural flavors.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598334/Nilagang_Baka_z6jwkd.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 6,
+    "dish_name": "Sinigang Inihaw na Baboy",
+    "description": "Grilled pork pieces added to a sour tamarind-based soup, combining the smoky flavor of grilled meat with the tanginess of sinigang broth and vegetables.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598326/Sinigang_Inihaw_na_Baboy_cjjwqe.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 7,
+    "dish_name": "Sinigang na Baboy",
+    "description": "Pork simmered in a sour tamarind broth with vegetables like radish, string beans, and water spinach.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598335/Sinigang_na_Baboy_zeewnt.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 8,
+    "dish_name": "Sinigang na Baka",
+    "description": "Beef chunks and vegetables cooked in a tangy tamarind-based soup, offering a hearty and sour flavor profile.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598327/Sinigang_na_Baka_wkosik.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 9,
+    "dish_name": "Sinigang na Hipon",
+    "description": "Fresh shrimp cooked in a sour tamarind soup with vegetables, creating a light yet flavorful dish.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598327/Sinigang_na_Hipon_ql06ph.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 10,
+    "dish_name": "Sinigang na Inihaw na Manok",
+    "description": "Grilled chicken pieces added to a sour tamarind soup, combining smoky and tangy flavors.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598328/Sinigang_na_Inihaw_na_Manok_ydou6y.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 11,
+    "dish_name": "Inihaw na Baboy",
+    "description": "Grilled pork marinated in a mixture of soy sauce, calamansi, garlic, and spices, resulting in juicy, flavorful meat.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598332/Inihaw_na_Baboy_douipn.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 12,
+    "dish_name": "Lechon Kawali",
+    "description": "Deep-fried pork belly with crunchy skin and tender meat, typically served with a dipping sauce like liver sauce or vinegar.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598332/Lechon_Kawali_sywb7c.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 13,
+    "dish_name": "Pork Barbeque",
+    "description": "Skewered pork marinated in a sweet-savory mixture, then grilled to caramelized perfection.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598322/Pork_BBQ_6_pcs_ajcdyp.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 14,
+    "dish_name": "Sweet and Sour Pork",
+    "description": "Crispy fried pork pieces coated in a tangy sauce with pineapple, bell peppers, and onions.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598331/Sweet_and_Sour_Pork_wtnrw2.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 15,
+    "dish_name": "Crispy Pata",
+    "description": "Deep-fried pork leg or knuckle with crispy skin and tender meat, served with a soy-vinegar dipping sauce.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598320/Crispy_Pata_commng.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 16,
+    "dish_name": "Bangus Salpicao",
+    "description": "Milkfish cubes sautéed in garlic, butter, and soy sauce, inspired by the traditional beef salpicao.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598335/Bangus_Salpicao_ivgvup.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 17,
+    "dish_name": "Beef Caldereta",
+    "description": "A rich tomato-based beef stew with potatoes, carrots, bell peppers, and sometimes liver spread for added flavor.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598318/Beef_Caldereta_oa6exp.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 18,
+    "dish_name": "Grilled Bangus",
+    "description": "Milkfish (bangus) marinated in a mixture of calamansi juice, soy sauce, and spices, then grilled to perfection. A Filipino classic.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598324/Grilled_Bangus_ol3dru.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 19,
+    "dish_name": "Grilled Squid",
+    "description": "Fresh squid marinated in a blend of citrus, garlic, and Filipino spices, then chargrilled to tender perfection. Often served with a dipping sauce.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598325/Grilled_Squid_tl7nmt.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 20,
+    "dish_name": "Kare Kare Beef",
+    "description": "A rich Filipino stew made with beef and vegetables simmered in a thick peanut sauce, traditionally served with bagoong (shrimp paste).",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598325/Kare-Kare_Beef_ob4jxt.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 21,
+    "dish_name": "Roasted Chicken",
+    "description": "Whole chicken seasoned with Filipino herbs and spices, then roasted until the skin is crispy and the meat is juicy.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598325/Roasted_Chicken_iia1dc.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 22,
+    "dish_name": "Salt and Pepper Squid",
+    "description": "Squid pieces coated in a light batter, fried crisp, then tossed with salt, pepper, and sometimes chili and garlic.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598326/Salt_and_Pepper_Squid_v35dzl.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 23,
+    "dish_name": "Sweet and Spicy Fried Chicken",
+    "description": "Crispy fried chicken tossed in a sauce that balances sweetness with a spicy kick, influenced by both Filipino and Asian flavors.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598331/Sweet_and_Spicy_Fried_Chicken_ppgowe.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 24,
+    "dish_name": "Sweet and Sour Fish Fillet",
+    "description": "Crispy fish fillets topped with a vibrant sweet and sour sauce made with pineapple, bell peppers, and tomatoes.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598329/Sweet_and_Sour_Fish_Fillet_pkby59.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 25,
+    "dish_name": "Fried Chicken",
+    "description": "Chicken pieces coated in seasoned flour or batter, deep-fried until golden and crispy, a Filipino favorite often served with banana ketchup.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598335/2pcs_Fried_Chicken_lghpmu.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 26,
+    "dish_name": "Canton Guisado",
+    "description": "Stir-fried egg noodles with assorted vegetables, meat, and seafood in a savory sauce, a Filipino adaptation of Chinese chow mein.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598319/Canton_Guisado_pbyudh.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 27,
+    "dish_name": "Fish Fillet Oriental",
+    "description": "Delicate fish fillets seasoned with Asian spices, lightly battered and fried, then topped with a flavorful oriental sauce.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598321/Fish_Fillet_Oriental_jn03m7.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 28,
+    "dish_name": "Fried Garlic Chicken",
+    "description": "Chicken pieces seasoned, fried until golden, then topped with crispy fried garlic bits for an aromatic and savory flavor.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598323/Fried_Garlic_Chicken_j79xgb.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 29,
+    "dish_name": "Roast Beef with Gravy",
+    "description": "Slow-cooked tender beef slices served with rich brown gravy, inspired by Western cuisine but adapted to Filipino tastes.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598322/Roast_Beef_with_Gravy_tff1s0.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 30,
+    "dish_name": "Sisig Rice Platter",
+    "description": "A complete meal featuring the famous Filipino sisig (chopped pork parts seasoned with calamansi, onions, and chili) served over steamed rice.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598329/Sisig_Rice_Platter_d7n3r5.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 31,
+    "dish_name": "Boneless Chicken Teriyaki",
+    "description": "Tender boneless chicken pieces glazed with a sweet and savory teriyaki sauce, often served with vegetables and steamed rice.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598319/Boneless_Chicken_Teriyaki_c4jchj.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 32,
+    "dish_name": "Sweet and Spicy Squid",
+    "description": "Tender squid pieces stir-fried and coated in a sauce that combines sweet, spicy, and savory elements, often with bell peppers and onions.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598332/Sweet_and_Spicy_Squid_taelgm.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 33,
+    "dish_name": "Shrimp Oriental",
+    "description": "Succulent shrimp stir-fried with vegetables in a light oriental sauce with notes of ginger and garlic.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598335/Shrimp_Oriental_xgjl7p.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 34,
+    "dish_name": "Sizzling Pork Sisig",
+    "description": "A sizzling hot plate dish of finely chopped pork face parts and liver, seasoned with calamansi juice, onions, and chili peppers.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598329/Sizzling_Pork_Sisig_hekvrd.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  },
+  {
+    "dish_id": 35,
+    "dish_name": "Kare Kareng Gulay",
+    "description": "A vegetarian version of Kare Kare featuring an assortment of vegetables like eggplant, string beans, and banana blossoms in peanut sauce.",
+    "image": "https://res.cloudinary.com/dkgafu4ts/image/upload/v1746598319/Kare-Kareng_Gulay_fdopfy.jpg",
+    "contributed_by": "giligansrestaurant.",
+    "contributed_on": "2025-05-07 00:00:00"
+  }
+]
