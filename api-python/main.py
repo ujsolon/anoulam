@@ -33,6 +33,9 @@ class CookingStepsRequest(BaseModel):
     dish_name: str
     ingredients: list[str]
 
+class DishSuggestionRequest(BaseModel):
+    ingredients: list[str]
+
 @app.get("/")
 def root():
     return {"message": "API is running"}
@@ -155,3 +158,39 @@ def get_dish_image(dish_name: str = Query(...)):
             return {"image_url": ""}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Image fetch error: {e}")
+    
+def generate_dish_suggestion_prompt(ingredients: list[str]) -> str:
+    prompt = (
+        "You are a Filipino home cooking assistant.\n"
+        "A user has the following ingredients at home:\n"
+        f"{', '.join(ingredients)}\n\n"
+        "Based on those, suggest 3 Filipino dishes the user can likely cook. "
+        "If there are any missing ingredients, list them for each suggestion.\n"
+        "Be concise. Format your answer like this:\n\n"
+        "1. Dish Name\nMissing: ingredient1, ingredient2\n\n"
+        "2. Dish Name\nMissing: none\n\n"
+        "3. Dish Name\nMissing: ingredient3\n\n"
+        "Exclude introductions, cooking steps, or any other information."
+        "Only use dishes commonly known in the Philippines. Do not invent new ones."
+    )
+    return prompt
+
+def get_dish_suggestions(ingredients: list[str], model):
+    prompt = generate_dish_suggestion_prompt(ingredients)
+    config = genai.types.GenerationConfig(max_output_tokens=300, temperature=0.6)
+    try:
+        response = model.generate_content(prompt, generation_config=config)
+        return response.text.strip()
+    except Exception as e:
+        raise RuntimeError(f"Error generating suggestions: {e}")
+
+@app.post("/dishes-from-ingredients/")
+def dishes_from_ingredients(request: DishSuggestionRequest):
+    if not request.ingredients:
+        raise HTTPException(status_code=400, detail="Ingredient list is required.")
+    try:
+        model = initialize_gemini_model()
+        suggestions = get_dish_suggestions(request.ingredients, model)
+        return {"suggestions": suggestions}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
