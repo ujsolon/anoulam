@@ -164,7 +164,7 @@ def generate_dish_suggestion_prompt(ingredients: list[str]) -> str:
         "You are a Filipino home cooking assistant.\n"
         "A user has the following ingredients at home:\n"
         f"{', '.join(ingredients)}\n\n"
-        "Based on those, suggest 3 Filipino dishes the user can likely cook. "
+        "Based on those, suggest 3 Filipino dishes the user can likely  cook based on the provided ingredients. Prioritize dishes that require the fewest additional ingredients "
         "If there are any missing ingredients, list them for each suggestion.\n"
         "Be concise. Format your answer like this:\n\n"
         "1. Dish Name\nMissing: ingredient1, ingredient2\n\n"
