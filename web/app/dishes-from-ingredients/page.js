@@ -15,6 +15,7 @@ export default function DishesFromIngredients() {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [highlightedDish, setHighlightedDish] = useState(null);
   const [servings, setServings] = useState(1);
+  const [dishCache, setDishCache] = useState({});
 
   const handleAddIngredient = () => {
     const trimmed = inputValue.trim();
@@ -70,12 +71,22 @@ export default function DishesFromIngredients() {
   };  
 
   const handleDishClick = async (dish, servings) => {
+    const dishKey = `${dish.dish.toLowerCase()}_${servings}`;
+    // If cached, use it
+    if (dishCache[dishKey]) {
+      setDishSelected({
+        name: dish.dish,
+        detailedIngredients: dishCache[dishKey],
+      });
+      return;
+    }
+  
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
         dish_name: dish.dish,
-        servings: servings,
+        servings,
       });
-
+  
       const lines = response.data.ingredients.split('\n').map(line => line.trim()).filter(Boolean);
       const parsed = lines.map(line => {
         const clean = line.replace(/^\*\s*/, '');
@@ -85,24 +96,31 @@ export default function DishesFromIngredients() {
           quantity: quantity?.trim() || '',
         };
       });
-
+  
       const missingSet = new Set(dish.missing.map(i => i.toLowerCase()));
       const userSet = new Set(ingredients.map(i => i.toLowerCase()));
-
+  
+      const processedIngredients = parsed.map(item => ({
+        ...item,
+        isMissing: missingSet.has(item.name) || !Array.from(userSet).some(userIng => item.name.includes(userIng)),
+        isUserProvided: Array.from(userSet).some(userIng => item.name.includes(userIng)),
+      }));
+  
+      // Save to state and cache
       setDishSelected({
         name: dish.dish,
-        detailedIngredients: parsed.map(item => ({
-          ...item,
-          isMissing: missingSet.has(item.name) || !Array.from(userSet).some(userIng => item.name.includes(userIng)),
-          isUserProvided: Array.from(userSet).some(userIng => item.name.includes(userIng)),
-        })),
+        detailedIngredients: processedIngredients,
       });
+      setDishCache(prev => ({
+        ...prev,
+        [dishKey]: processedIngredients,
+      }));
     } catch (err) {
       console.error('Failed to fetch full ingredients:', err);
       setDishSelected(null);
     }
   };
-
+  
   return (
     <div className="page-container">
       <Header />
@@ -156,7 +174,20 @@ export default function DishesFromIngredients() {
                     <button
                     key={idx}
                     className={`button-secondary ${highlightedDish?.dish === dish.dish ? 'active' : ''}`}
-                    onClick={() => setHighlightedDish(dish)}
+                    onClick={() => {
+                        const dishKey = `${dish.dish.toLowerCase()}_${servings}`;
+                        setHighlightedDish(dish);
+                        if (dishCache[dishKey]) {
+                            // Immediately show cached ingredients
+                            setDishSelected({
+                              name: dish.dish,
+                              detailedIngredients: dishCache[dishKey],
+                            });
+                          } else {
+                            // Clear view for ungenerated dish
+                            setDishSelected(null);
+                          }
+                    }}
                     >
                     {dish.dish}
                     </button>
