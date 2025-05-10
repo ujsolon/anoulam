@@ -600,3 +600,16 @@ button.text-lg {
   cursor: pointer;
   padding: 0;
 }
+
+.ingredient-user {
+  background-color: #d1fae5; /* light green */
+}
+
+.ingredient-missing {
+  background-color: #fef9c3; /* light yellow */
+}
+
+.ingredient-item {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
