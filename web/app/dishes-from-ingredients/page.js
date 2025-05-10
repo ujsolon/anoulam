@@ -88,10 +88,20 @@ export default function DishesFromIngredients() {
     const dishKey = `${dish.dish.toLowerCase()}_${servings}`;
     // If cached, use it
     if (dishCache[dishKey]) {
-      setDishSelected({
-        name: dish.dish,
-        detailedIngredients: dishCache[dishKey],
-      });
+        const cachedIngredients = dishCache[dishKey];
+        setDishSelected({
+          name: dish.dish,
+          detailedIngredients: cachedIngredients,
+        });
+        
+        // Re-init ingredientStates from cache
+        const initialStates = new Map();
+        cachedIngredients.forEach((item, idx) => {
+          if (item.isUserProvided) {
+            initialStates.set(idx, 2);
+          }
+        });
+        setIngredientStates(initialStates);
       return;
     }
     setGeneratingIngredients(true);
@@ -125,6 +135,16 @@ export default function DishesFromIngredients() {
         name: dish.dish,
         detailedIngredients: processedIngredients,
       });
+      
+      // Re-init ingredientStates from API result
+      const initialStates = new Map();
+      processedIngredients.forEach((item, idx) => {
+        if (item.isUserProvided) {
+          initialStates.set(idx, 2);
+        }
+      });
+      setIngredientStates(initialStates);
+      
       setDishCache(prev => ({
         ...prev,
         [dishKey]: processedIngredients,
@@ -288,7 +308,7 @@ export default function DishesFromIngredients() {
                   `}
                 >
                   <div className="flex justify-between items-center">
-                    <span>{item.name} — <strong>{item.quantity}</strong></span>
+                    <span>{item.name} — {item.quantity}</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation(); // prevent click from toggling state
