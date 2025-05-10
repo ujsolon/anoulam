@@ -54,7 +54,7 @@ def get_ingredients_from_model(dish_name: str, servings: int, model):
         "You are an ingredient list generator for a Philippine audience. "
         f"For the requested dish, provide *only* the ingredients and their estimated quantities suitable for {servings} servings. "
         "Format as a list with each ingredient on a new line, with ingredient name first, then quantity, separate by '-'. Example:\n"
-        "1. Ingredient Name - Quantity\n"
+        "* Ingredient Name - Quantity\n"
         "Exclude all other information like cooking steps, introductions, or notes.\n\n"
         f"List the ingredients for the dish: {dish_name}"
     )
