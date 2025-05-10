@@ -296,11 +296,32 @@ export default function DishesFromIngredients() {
                   key={idx}
                   onClick={() => {
                     setIngredientStates(prev => {
-                      const newMap = new Map(prev);
-                      const current = newMap.get(idx) ?? 0;
-                      newMap.set(idx, (current + 1) % 3); // cycle: 0 → 1 → 2 → 0
-                      return newMap;
-                    });
+                        const newMap = new Map(prev);
+                        const current = newMap.get(idx) ?? 0;
+                        const next = (current + 1) % 3;
+                        newMap.set(idx, next);
+                      
+                        // If toggling into green, add to ingredients[] if not present
+                        const normalizedName = item.name.trim().toLowerCase();
+                    
+                        // Check if normalizedName is already in ingredients before adding
+                        if (next === 2 && !ingredients.includes(normalizedName)) {
+                          setIngredients(prevIngredients => 
+                            prevIngredients.some(i => i.trim().toLowerCase() === normalizedName) 
+                              ? prevIngredients // If already exists (case insensitive), don't add
+                              : [...prevIngredients, normalizedName]
+                          );
+                        }
+                    
+                        // If toggling out of green, remove from ingredients
+                        if (current === 2 && next !== 2) {
+                          setIngredients(prev =>
+                            prev.filter(i => i.trim().toLowerCase() !== normalizedName)
+                          );
+                        }
+                    
+                        return newMap;
+                      });
                   }}
                   className={`ingredient-item rounded-md p-2 cursor-pointer
                     ${ingredientStates.get(idx) === 1 ? 'crossed' : ''}
