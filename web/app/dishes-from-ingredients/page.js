@@ -16,6 +16,7 @@ export default function DishesFromIngredients() {
   const [highlightedDish, setHighlightedDish] = useState(null);
   const [servings, setServings] = useState(1);
   const [dishCache, setDishCache] = useState({});
+  const [generatingIngredients, setGeneratingIngredients] = useState(false);
 
   const handleAddIngredient = () => {
     const trimmed = inputValue.trim();
@@ -71,6 +72,10 @@ export default function DishesFromIngredients() {
   };  
 
   const handleDishClick = async (dish, servings) => {
+    if (!servings || isNaN(servings) || servings < 1) {
+        alert("Please enter a valid number of servings.");
+        return;
+      }
     const dishKey = `${dish.dish.toLowerCase()}_${servings}`;
     // If cached, use it
     if (dishCache[dishKey]) {
@@ -212,10 +217,11 @@ export default function DishesFromIngredients() {
             placeholder="e.g. 3"
             />
             <button
-                className="button-primary"
-                onClick={() => handleDishClick(highlightedDish, servings)}
+            className={`button-primary ${generatingIngredients ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={() => handleDishClick(highlightedDish, servings)}
+            disabled={generatingIngredients}
             >
-                Get Ingredients
+            {generatingIngredients ? 'Loading...' : 'Get Ingredients'}
             </button>
             </div>
         </div>
