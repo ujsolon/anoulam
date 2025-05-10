@@ -11,23 +11,23 @@ export default function Home() {
           <h1>Discover meal ideas with ease</h1>
           <p>Get personalized meal suggestions based on what you have at home. Simple, quick, and delicious options await!</p>
           <div className="button-group">
-            {/* <div>
-              <Link href="/what-to-cook" className="primary-button">
+            <div>
+              <Link href="/dishes-from-ingredients" className="primary-button">
                 🍳 What to Cook?
               </Link>
-              <p className="button-description">Tell us what stuff you have!</p>
-            </div> */}
-            <div>
-              <Link href="/what-to-buy" className="secondary-button">
-                🛒 What to Buy?
-              </Link>
-              <p className="button-description">Tell us what dish you want to cook today!</p>
+              <p className="button-description">Enter the ingredients you have, and we’ll suggest dishes.</p>
             </div>
             <div>
-              <Link href="/random-dish" className="secondary-button">
+              <Link href="/what-to-buy" className="primary-button">
+                🛒 What to Buy?
+              </Link>
+              <p className="button-description">Pick a dish, and we’ll show you what to shop for.</p>
+            </div>
+            <div>
+              <Link href="/random-dish" className="primary-button">
                 🎲 Surprise Me!
               </Link>
-              <p className="button-description">Pick a random dish for me</p>
+              <p className="button-description">Get a random dish idea to try today.</p>
             </div>
           </div>
         </div>
