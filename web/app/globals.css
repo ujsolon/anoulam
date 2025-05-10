@@ -605,6 +605,10 @@ button.text-lg {
   background-color: #d1fae5; /* light green */
 }
 
+.ingredient-user:hover {
+  background-color: #c7f5dd; /* slightly darker green on hover */
+}
+
 .ingredient-missing {
   background-color: #fef9c3; /* light yellow */
 }

@@ -18,6 +18,10 @@ export default function DishesFromIngredients() {
   const [dishCache, setDishCache] = useState({});
   const [generatingIngredients, setGeneratingIngredients] = useState(false);
   const [ingredientsModified, setIngredientsModified] = useState(false);
+  const [crossedOut, setCrossedOut] = useState(new Set());
+  // 0 = normal, 1 = crossed, 2 = user-provided (green box)
+  const [ingredientStates, setIngredientStates] = useState(new Map());
+  const [copied, setCopied] = useState(false);
 
 
   const handleAddIngredient = () => {
@@ -240,28 +244,62 @@ export default function DishesFromIngredients() {
 
           {dishSelected?.detailedIngredients?.length > 0 && (
             <div className="card">
-              <h2 className="card-title">
-                Ingredients for: {dishSelected.name}
-                    - {servings || 1} serving{servings > 1 ? 's' : ''}
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="card-title">
+                    Ingredients for: {dishSelected.name} — {servings || 1} serving{servings > 1 ? 's' : ''}
                 </h2>
+                <button
+                    onClick={() => {
+                    const toCopy = dishSelected.detailedIngredients
+                        .filter((_, idx) => {
+                        const state = ingredientStates.get(idx);
+                        return state !== 1 && state !== 2; // exclude crossed out and user-provided (green)
+                        })
+                        .map(item => `${item.name} — ${item.quantity}`)
+                        .join('\n');
+
+                    const fullText = `Ingredients for: ${dishSelected.name} (${servings || 1} serving${servings > 1 ? 's' : ''})\n${toCopy}`;
+                    navigator.clipboard.writeText(fullText);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="text-lg hover:text-gray-700"
+                    title="Copy uncrossed + unconfirmed items"
+                >
+                    {copied ? <span className="text-green-600 text-sm">✔ Copied!</span> : '📋'}
+                </button>
+                </div>
+            
               <ul className="ingredients-list">
                 {dishSelected.detailedIngredients.map((item, idx) => (
                   <li
-                    key={idx}
-                    className={`ingredient-item ${item.isUserProvided ? 'ingredient-user' : 'ingredient-missing'} rounded-md p-2`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span>{item.name} — <strong>{item.quantity}</strong></span>
-                      {item.isMissing && (
-                        <button
-                          onClick={() => setSelectedIngredient(item.name)}
-                          className="text-sm text-blue-600 hover:underline ml-4"
-                        >
-                          🛒
-                        </button>
-                      )}
-                    </div>
-                  </li>
+                  key={idx}
+                  onClick={() => {
+                    setIngredientStates(prev => {
+                      const newMap = new Map(prev);
+                      const current = newMap.get(idx) ?? 0;
+                      newMap.set(idx, (current + 1) % 3); // cycle: 0 → 1 → 2 → 0
+                      return newMap;
+                    });
+                  }}
+                  className={`ingredient-item rounded-md p-2 cursor-pointer
+                    ${ingredientStates.get(idx) === 1 ? 'crossed' : ''}
+                    ${ingredientStates.get(idx) === 2 ? 'ingredient-user' : ''}
+                  `}
+                >
+                  <div className="flex justify-between items-center">
+                    <span>{item.name} — <strong>{item.quantity}</strong></span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // prevent click from toggling state
+                        setSelectedIngredient(item.name);
+                      }}
+                      className="text-sm text-blue-600 hover:underline ml-4"
+                    >
+                      🛒
+                    </button>
+                  </div>
+                </li>                
                 ))}
               </ul>
             </div>
