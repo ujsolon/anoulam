@@ -17,8 +17,11 @@ export default function DishesFromIngredients() {
   const [servings, setServings] = useState(1);
   const [dishCache, setDishCache] = useState({});
   const [generatingIngredients, setGeneratingIngredients] = useState(false);
+  const [ingredientsModified, setIngredientsModified] = useState(false);
+
 
   const handleAddIngredient = () => {
+    setIngredientsModified(true);
     const trimmed = inputValue.trim();
     if (trimmed && !ingredients.includes(trimmed)) {
       setIngredients([...ingredients, trimmed]);
@@ -27,6 +30,7 @@ export default function DishesFromIngredients() {
   };
 
   const handleRemoveIngredient = (index) => {
+    setIngredientsModified(true);
     setIngredients(prev => prev.filter((_, i) => i !== index));
   };
 
@@ -47,27 +51,28 @@ export default function DishesFromIngredients() {
     setLoading(true);
     setSubmitClicked(true);
     try {
-    const response = await axios.post('https://anoulam.onrender.com/dishes-from-ingredients/', {
-        ingredients: cleanedIngredients,
-    });
-  
-      const lines = response.data.suggestions.trim().split(/\n\n/);
-      const parsed = lines.map(entry => {
-        const [titleLine, missingLine] = entry.split('\n');
-        return {
-          dish: titleLine?.replace(/^\d+\.\s*/, '').trim(),
-          missing: (missingLine?.replace(/^Missing:\s*/, '') || '')
-            .split(',')
-            .map(i => i.trim())
-            .filter(Boolean),
-        };
-      });
-      setSuggestions(parsed);
-    } catch (err) {
+        const response = await axios.post('https://anoulam.onrender.com/dishes-from-ingredients/', {
+            ingredients: cleanedIngredients,
+        });
+    
+        const lines = response.data.suggestions.trim().split(/\n\n/);
+        const parsed = lines.map(entry => {
+            const [titleLine, missingLine] = entry.split('\n');
+            return {
+            dish: titleLine?.replace(/^\d+\.\s*/, '').trim(),
+            missing: (missingLine?.replace(/^Missing:\s*/, '') || '')
+                .split(',')
+                .map(i => i.trim())
+                .filter(Boolean),
+            };
+        });
+        setSuggestions(parsed);
+        setIngredientsModified(false);
+        } catch (err) {
         console.error('Error fetching suggestions:', err);
     } finally {
-    setLoading(false);
-    setSubmitClicked(false);
+        setLoading(false);
+        setSubmitClicked(false);
     }
   };  
 
@@ -85,7 +90,7 @@ export default function DishesFromIngredients() {
       });
       return;
     }
-  
+    setGeneratingIngredients(true);
     try {
       const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
         dish_name: dish.dish,
@@ -124,6 +129,7 @@ export default function DishesFromIngredients() {
       console.error('Failed to fetch full ingredients:', err);
       setDishSelected(null);
     }
+    setGeneratingIngredients(false);
   };
   
   return (
@@ -161,13 +167,17 @@ export default function DishesFromIngredients() {
                 {ingredients.length === 0 && <p className="empty-state">No ingredients added yet</p>}
                 </div>
                 <div className="button-group mt-4">
-                    <button 
-                        className={`button-primary ${submitClicked ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        onClick={fetchSuggestions}
-                        disabled={loading || submitClicked}
-                    >
-                        {loading ? 'Generating Suggestions...' : 'Suggest Dishes'}
-                    </button>
+                <button 
+                className={`button-primary ${submitClicked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={fetchSuggestions}
+                disabled={loading || submitClicked}
+                >
+                {loading
+                    ? 'Generating Suggestions...'
+                    : ingredientsModified
+                    ? 'Suggest Dishes (Updated Ingredients)'
+                    : 'Suggest Dishes'}
+                </button>
                 </div>
             </div>
 
