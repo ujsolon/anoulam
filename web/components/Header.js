@@ -12,7 +12,11 @@ export default function Header() {
       <div className="flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
           <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-            <span className="text-black text-xl">★</span>
+            <img 
+              src="/favicon.ico" 
+              alt="Ano Ulam logo" 
+              className="w-5 h-5"
+            />
           </div>
           Ano Ulam?
         </Link>
