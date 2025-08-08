@@ -2,6 +2,8 @@
 
 Welcome to the **Ano Ulam?** repository! This project is a meal planning and grocery shopping assistant designed to help users discover recipes, generate shopping lists, and reduce food waste. It combines a user-friendly web interface with a FastAPI backend powered by AI to provide personalized meal suggestions and ingredient lists.
 
+**Website:** [https://anoulam.vercel.app/](https://anoulam.vercel.app/)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
