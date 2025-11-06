@@ -51,7 +51,7 @@ export default function WhatToBuy() {
     setSubmitted(true);
     setLoading(true);
     try {
-      const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
+      const response = await axios.post(`https://anoulam-api-220347503635.us-east1.run.app/get-ingredients/`, {
         dish_name: dishName,
         servings: servings,
       });
@@ -89,7 +89,7 @@ export default function WhatToBuy() {
     setHasGenerated(true);
     setCookingLoading(true);
     try {
-      const response = await axios.post('https://anoulam.onrender.com/get-cooking-steps/', {
+      const response = await axios.post(`https://anoulam-api-220347503635.us-east1.run.app/get-cooking-steps/`, {
         dish_name: dishName,
         ingredients: ingredients,
       });

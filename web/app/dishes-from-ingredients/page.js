@@ -55,7 +55,7 @@ export default function DishesFromIngredients() {
     setLoading(true);
     setSubmitClicked(true);
     try {
-        const response = await axios.post('https://anoulam.onrender.com/dishes-from-ingredients/', {
+        const response = await axios.post(`https://anoulam-api-220347503635.us-east1.run.app/dishes-from-ingredients/`, {
             ingredients: cleanedIngredients,
         });
     
@@ -106,7 +106,7 @@ export default function DishesFromIngredients() {
     }
     setGeneratingIngredients(true);
     try {
-      const response = await axios.post('https://anoulam.onrender.com/get-ingredients/', {
+      const response = await axios.post(`https://anoulam-api-220347503635.us-east1.run.app/get-ingredients/`, {
         dish_name: dish.dish,
         servings,
       });
